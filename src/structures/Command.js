@@ -239,7 +239,9 @@ class Command {
         this.client.cmdCooldownCache.set(key, Date.now());
     }
 
-    interactionRun(_interaction) { throw new Error("This method must be implemented!") }
+    interactionRun(_interaction) {
+        throw new Error("This method must be implemented!")
+    }
 }
 
 module.exports = Command;

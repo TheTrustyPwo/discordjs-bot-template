@@ -1,5 +1,5 @@
 const path = require("path");
-const { startupCheck } = require("./src/utils/botUtils");
+const {startupCheck} = require("./src/utils/botUtils");
 const BotClient = require("./src/structures/BotClient");
 const config = require("./config");
 
