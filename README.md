@@ -137,6 +137,7 @@ This shows how you can use the template.
 ## Usage
 
 #### Custom Slash Commands
+For this tutorial, we will be creating a simple `/say <message>` command which will echo the message specified by the user
 1. Navigate to `src/commmands`
 2. Create a directory which will be the command category (For this tutorial, we'll be using `utility`)
 3. Create a new Javascript file under the directory, name of the file will be the command name
@@ -180,6 +181,31 @@ const message = interaction.options.getString("message")// Gets the value from t
 await interaction.followUp(message); // Follows up the interaction response with the message, essentially echoing it
 ```
 6. Restart the bot and your command should be registered successfully!
+
+
+### Registering Events
+For this tutorial, we will be listening to the `guildMemberAdd` event and automatically give the user a role when they join the server.
+1. Navigate to `src/events`
+2. Create a directory named `member` and within the folder, create a javascript file named `guildMemberAdd` (File name must be exactly the same as the event name)
+3. Add the following code into the file
+```js
+const autoRole = "YOUR AUTOROLE ID"; // AutoRole ID
+
+/**
+ * @param {import("../../structures").BotClient} client
+ * @param {import("discord.js").GuildMember} member
+ */
+module.exports = async (client, member) => {
+    if (!member || !member.guild) return; // Undefined member or guild
+
+    const { guild } = member; // Get the guild
+    const role = guild.roles.cache.get(settings.autorole); // Getting the role by ID
+    if (role) member.roles.add(role).catch((err) => { // Give the role to the member 
+        // Catch the error, if any
+    });
+}
+```
+4. Restart the bot and the event should be successfully registered!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
