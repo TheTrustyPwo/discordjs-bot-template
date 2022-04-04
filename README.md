@@ -7,6 +7,7 @@
 
 
 <!-- PROJECT LOGO -->
+<!--suppress HtmlDeprecatedAttribute, HtmlUnknownAnchorTarget -->
 <br />
 <div align="center">
 
@@ -83,10 +84,7 @@ Make sure you have the following software installed
   ```sh
   npm install npm@latest -g
   ```
-* Discord.js v13
-  ```sh
-  npm install discord.js@latest
-  ```
+* NodeJS v16.6+
 
 ### Installation
 
@@ -126,6 +124,10 @@ This shows how you can use the template.
         },
     };
     ```
+10. Start the bot
+    ```sh
+    node index.js
+    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -134,8 +136,54 @@ This shows how you can use the template.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-#### Creating your own slash command
-*Coming soon*
+#### Custom Slash Commands
+1. Navigate to `src/commmands`
+2. Create a directory which will be the command category (For this tutorial, we'll be using `utility`)
+3. Create a new Javascript file under the directory, name of the file will be the command name
+4. Copy this code into the file that you have just created
+```js
+const { Command } = require("../../structures");
+
+module.exports = class SayCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "say", // Name of the command (Must be in lowercase)
+            description: "Echoes the message", // Slash command description
+            category: "UTILITY", // Command category; Must be defined in src/Structures/CommandCategory.js
+            enabled: true,
+            options: [ // Basically the command parameters
+                {
+                    name: "message", // Name & Identifier
+                    description: "The message to echo", // Description
+                    type: "STRING", // Type, 
+                    // {USER|ROLE|NUMBER|STRING|BOOLEAN|INTEGER|CHANNEL|MENTIONABLE|SUB_COMMAND|SUB_COMMAND_GROUP}
+                    // https://discordjs.guide/interactions/slash-commands.html#option-types
+                    required: true, // If false, it does not need to be specified in order for the command to run
+                },
+            ],
+        });
+    }
+
+    /**
+     * @param {CommandInteraction} interaction
+     */
+    async interactionRun(interaction) {
+        
+    }
+}
+```
+The above code basically sets up the command framework for our `/say <message>` command. The `interactionRun` is the function that will run when the command is triggered, so we will be adding code to handle the command in the next step.
+5. Add the following code
+```js
+    /**
+     * @param {CommandInteraction} interaction
+     */
+    async interactionRun(interaction) {
+        const message = interaction.options.getString("message") // Gets the value from the 'message' option
+        await interaction.followUp(message); // Follows up the interaction response with the message, essentially echoing it
+    }
+```
+6. Restart the bot and your command should be registered successfully!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
