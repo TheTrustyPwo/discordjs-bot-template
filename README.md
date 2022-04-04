@@ -142,6 +142,7 @@ This shows how you can use the template.
 3. Create a new Javascript file under the directory, name of the file will be the command name
 4. Copy this code into the file that you have just created
 ```js
+const { CommandInteraction } = require("discord.js");
 const { Command } = require("../../structures");
 
 module.exports = class SayCommand extends Command {
@@ -173,15 +174,10 @@ module.exports = class SayCommand extends Command {
 }
 ```
 The above code basically sets up the command framework for our `/say <message>` command. The `interactionRun` is the function that will run when the command is triggered, so we will be adding code to handle the command in the next step.
-5. Add the following code
+5. Add the following code under the `interactionRun` function
 ```js
-    /**
-     * @param {CommandInteraction} interaction
-     */
-    async interactionRun(interaction) {
-        const message = interaction.options.getString("message") // Gets the value from the 'message' option
-        await interaction.followUp(message); // Follows up the interaction response with the message, essentially echoing it
-    }
+const message = interaction.options.getString("message")// Gets the value from the 'message' option
+await interaction.followUp(message); // Follows up the interaction response with the message, essentially echoing it
 ```
 6. Restart the bot and your command should be registered successfully!
 
