@@ -15,9 +15,9 @@
   <p align="center">
     An awesome Discord.js Bot Template to jumpstart your development!
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/TheTrustyPwo/discordjs-bot-template/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/TheTrustyPwo/discordjs-bot-template/issues">Request Feature</a>
   </p>
 </div>
 
