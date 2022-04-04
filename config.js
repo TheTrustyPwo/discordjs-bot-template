@@ -1,6 +1,5 @@
 module.exports = {
     BOT_TOKEN: "",
-    MONGO_CONNECTION: "",
     ADMIN_IDS: [], // Bot owner ID's
     INTERACTIONS: {
         SLASH: true, // Should the interactions be enabled

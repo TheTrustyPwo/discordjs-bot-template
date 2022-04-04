@@ -15,6 +15,5 @@ process.on("unhandledRejection", (err) => client.logger.error(`Unhandled excepti
 
 (async () => {
     await startupCheck();
-    await client.initializeMongoose();
     await client.login(config.BOT_TOKEN);
 })();

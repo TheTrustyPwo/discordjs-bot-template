@@ -1,9 +1,7 @@
 const {Client, Collection, Intents} = require("discord.js");
-const config = require("../../config.js");
 const path = require("path");
 const fs = require("fs");
 const {table} = require("table");
-const mongoose = require("mongoose");
 const logger = require("../helpers/logger");
 const Command = require("./Command");
 
@@ -19,11 +17,11 @@ module.exports = class BotClient extends Client {
                 Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
                 Intents.FLAGS.GUILD_VOICE_STATES,
             ],
+            restRequestTimeout: 2000,
             partials: ["USER", "MESSAGE", "REACTION"],
             allowedMentions: {
                 repliedUser: false,
             },
-            restRequestTimeout: 20000,
         });
 
         this.config = require("../../config"); // load the config file
@@ -38,21 +36,6 @@ module.exports = class BotClient extends Client {
 
         // Logger
         this.logger = logger;
-    }
-
-    /**
-     * Initialize mongoose connection and keep it alive
-     */
-    async initializeMongoose() {
-        this.logger.log(`Connecting to MongoDB...`);
-
-        await mongoose.connect(config.MONGO_CONNECTION, {
-            keepAlive: true,
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
-
-        this.logger.success("Mongoose: Database connection established");
     }
 
     /**
@@ -174,17 +157,6 @@ module.exports = class BotClient extends Client {
                 }))
                 .forEach((s) => toRegister.push(s));
         }
-
-        // filter contexts
-        if (this.config.INTERACTIONS.CONTEXT) {
-            this.contextMenus
-                .map((ctx) => ({
-                    name: ctx.name,
-                    type: ctx.type,
-                }))
-                .forEach((c) => toRegister.push(c));
-        }
-
         // Register Globally
         if (!guildId) {
             await this.application.commands.set(toRegister);

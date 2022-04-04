@@ -1,19 +1,10 @@
 const config = require("../../config.js");
-const {success, warn, error, log} = require("../helpers/logger");
-const {MessageEmbed} = require("discord.js");
+const {error, log} = require("../helpers/logger");
 
 function validateConfig() {
     log("Validating config.js");
     if (!config.BOT_TOKEN) {
         error("config.js: BOT_TOKEN cannot be empty");
-        process.exit();
-    }
-    if (!config.MONGO_CONNECTION) {
-        error("config.js: MONGO_CONNECTION cannot be empty");
-        process.exit();
-    }
-    if (isNaN(config.CACHE_SIZE.GUILDS) || isNaN(config.CACHE_SIZE.USERS) || isNaN(config.CACHE_SIZE.MEMBERS)) {
-        error("config.js: CACHE_SIZE must be a positive integer");
         process.exit();
     }
 }

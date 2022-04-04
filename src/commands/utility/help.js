@@ -174,8 +174,6 @@ const waiter = (msg, userId) => {
  * @param {string} category
  */
 function getSlashCategoryEmbeds(client, category) {
-    let collector = "";
-
     // For Each Category
     const commands = Array.from(client.slashCommands.filter((cmd) => cmd.category === category).values());
 
